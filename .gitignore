@@ -1,0 +1,34 @@
+# ========================
+# Ambientes Virtuais
+# ========================
+venv/
+env/
+.env
+
+# ========================
+# Arquivos do Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ========================
+# Arquivos de IDE e SO
+# ========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ========================
+# Arquivos Privados do Curso (AloiTech)
+# ========================
+docs/
+
+.agent/
+scripts/
+GEMINI.md
+metadados_aula.txt
+readme_aula.md
+roteiro_template.md
