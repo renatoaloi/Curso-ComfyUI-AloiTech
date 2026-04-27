@@ -1,0 +1,435 @@
+{
+  "id": "4f9f6803-a3eb-4103-b5b2-ad685174e7bf",
+  "revision": 0,
+  "last_node_id": 9,
+  "last_link_id": 14,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        3.1370510424976032,
+        -340.0236640285647
+      ],
+      "size": [
+        270,
+        130.65625
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "juggernautXL_ragnarokBy.safetensors"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "KSampler",
+      "pos": [
+        736.5724443231938,
+        -75.51430604453253
+      ],
+      "size": [
+        367.75,
+        565.3125
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 4
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        113185053314562,
+        "fixed",
+        25,
+        6,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "type": "CLIPTextEncode",
+      "pos": [
+        414.15852393333444,
+        -359.3891503490721
+      ],
+      "size": [
+        290.109375,
+        139.796875
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "title": "Prompt Positivo",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "um cachorro antropomórfico bebendo café em um resort ao pôr do sol, ilustração em quadrinhos 2D"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        382.76916399856407,
+        -35.19052871438009
+      ],
+      "size": [
+        225,
+        116.015625
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "title": "Prompt Negativo",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "humanos, baixa qualidade, borrão, borrão de movimento, membros extras"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 5,
+      "type": "EmptyLatentImage",
+      "pos": [
+        357.49264829863,
+        142.63323371351214
+      ],
+      "size": [
+        270,
+        144
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        832,
+        1216,
+        1
+      ]
+    },
+    {
+      "id": 6,
+      "type": "VAEDecode",
+      "pos": [
+        1115.6623098018426,
+        -267.5129873915066
+      ],
+      "size": [
+        225,
+        72
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 12
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 8,
+      "type": "SaveImage",
+      "pos": [
+        1205.2486408114253,
+        -100.86133166704121
+      ],
+      "size": [
+        826.3125,
+        667.265625
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 13
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "aula02/curso"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      1,
+      1,
+      3,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      1,
+      1,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      4,
+      3,
+      0,
+      2,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      4,
+      0,
+      2,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      10,
+      1,
+      2,
+      6,
+      1,
+      "VAE"
+    ],
+    [
+      11,
+      5,
+      0,
+      2,
+      3,
+      "LATENT"
+    ],
+    [
+      12,
+      2,
+      0,
+      6,
+      0,
+      "LATENT"
+    ],
+    [
+      13,
+      6,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8181855921026143,
+      "offset": [
+        19.085114804130605,
+        555.4108209533175
+      ]
+    },
+    "reroutes": [
+      {
+        "id": 1,
+        "parentId": 3,
+        "pos": [
+          744.527498042475,
+          -423.39676140655394
+        ],
+        "linkIds": [
+          10
+        ]
+      },
+      {
+        "id": 2,
+        "parentId": 1,
+        "pos": [
+          981.4953142359466,
+          -318.6069733411003
+        ],
+        "linkIds": [
+          10
+        ]
+      },
+      {
+        "id": 3,
+        "pos": [
+          373.00006762859323,
+          -437.6862779609341
+        ],
+        "linkIds": [
+          10
+        ]
+      },
+      {
+        "id": 4,
+        "pos": [
+          428.96734079991495,
+          -145.94198164234115
+        ],
+        "linkIds": [
+          1
+        ]
+      }
+    ],
+    "linkExtensions": [
+      {
+        "id": 1,
+        "parentId": 4
+      },
+      {
+        "id": 10,
+        "parentId": 2
+      }
+    ],
+    "frontendVersion": "1.42.14"
+  },
+  "version": 0.4
+}
